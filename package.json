@@ -1,6 +1,6 @@
 {
   "name": "nodejs-mail-sender",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "dist/index.js",
   "access": "public",
@@ -9,7 +9,12 @@
     "lint": "eslint . --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["nodemailer", "mail-sender", "node-send-email", "send-email"],
+  "keywords": [
+    "nodemailer",
+    "mail-sender",
+    "node-send-email",
+    "send-email"
+  ],
   "author": "Ramu Narasinga",
   "license": "ISC",
   "devDependencies": {
@@ -20,6 +25,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "nodejs-mail-sender": "^1.0.1",
     "nodemailer": "^6.9.3"
   }
 }
