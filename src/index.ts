@@ -7,7 +7,7 @@ import { Options as MailerOptions } from "nodemailer/lib/mailer";
 
 import { envVariablesRequired } from "./constants";
 
-export class Mailer {
+class Mailer {
     
     transporter: Transporter | undefined;
 
@@ -66,3 +66,6 @@ export class Mailer {
         return result;
     }
 }
+
+// singleton pattern
+export default new Mailer();
