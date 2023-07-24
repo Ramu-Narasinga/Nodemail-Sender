@@ -1,9 +1,13 @@
 {
   "name": "nodejs-mail-sender",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "",
   "main": "dist/index.js",
   "access": "public",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ramu-Narasinga/Nodemail-Sender"
+  },
   "scripts": {
     "start": "tsc && node dist/index.js",
     "lint": "eslint . --ext .ts",
