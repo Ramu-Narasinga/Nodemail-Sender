@@ -23,7 +23,7 @@ const mailerUsingStringConf = async () => {
   }
 }
 
-// mailerUsingStringConf();
+mailerUsingStringConf();
 
 const mailerUsingOptions = async () => {
 
