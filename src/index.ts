@@ -4,24 +4,29 @@ import {
 } from "nodemailer";
 import { Options as TransporterOptions } from "nodemailer/lib/smtp-transport";
 import { Options as MailerOptions } from "nodemailer/lib/mailer";
+import 'dotenv/config';
 
-import { envVariablesRequired } from "./constants";
+import { envVariablesRequired, getAuth, getTls } from "./utils";
 
-class Mailer {
+export class Mailer {
     
     transporter: Transporter | undefined;
 
-    constructor() {
-	    this._checkEnv(envVariablesRequired);
+    constructor(smtpConfig?: string) {
+      if (smtpConfig) {
+        this.transporter = createTransport(smtpConfig);
+      } else {
+        this._checkEnv(envVariablesRequired);
         this.transporter = createTransport(this._getOptions());
+      }
     }
 
     private _checkEnv(variables: String[]) {
         var missing = [];
-        
+        console.log("process.env:", process.env);
         variables.forEach(function(variable) {
-            if (!process.env.variable) {
-            missing.push(variable);
+            if (!process.env[variable as string]) {
+              missing.push(variable);
             }
         });
         
@@ -35,29 +40,12 @@ class Mailer {
 
     private _getOptions(): TransporterOptions {
         return {
-            name: process.env.NODEMAIL_SENDER_NAME,
-            host: process.env.NODEMAIL_SENDER_HOST,
-            port: +process.env.NODEMAIL_SENDER_PORT,
-            secure: Boolean(process.env.NODEMAIL_SENDER_SECURE),
-            auth: process.env.NODEMAIL_SENDER_USERNAME 
-                ? {
-                    user: process.env.NODEMAIL_SENDER_USERNAME,
-                    pass: process.env.NODEMAIL_SENDER_PASSWORD
-                } 
-                : undefined,
-            tls: process.env.NODEMAIL_SENDER_SECURE
-                ? 
-                (
-                    process.env.NODEMAIL_SENDER_TLS_CIPHERS ?
-                        {
-                            ciphers: process.env.NODEMAIL_SENDER_CIPHERS
-                        }
-                        : undefined
-                )
-                : {
-                    rejectUnauthorized: false
-                }
-                
+            name: process.env.SMTP_NAME,
+            host: process.env.SMTP_HOST,
+            port: +process.env.SMTP_PORT,
+            secure: process.env.SMTP_SECURE == 'true' ? true : false,
+            auth: getAuth(),
+            tls: getTls()
         }
     }
 
@@ -66,6 +54,3 @@ class Mailer {
         return result;
     }
 }
-
-// singleton pattern
-export default new Mailer();
